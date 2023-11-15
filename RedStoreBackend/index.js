@@ -31,7 +31,7 @@ app.get("/",(req,res)=>{
 app.post("/register",async (req,res)=>{
     const username = req.body.email;
     const password = req.body.password;
-    const user = await User.find({username:username});
+    const user = await User.find({email:username});
     if(user.length){
         res.status(409).send("User already exist");
     }
@@ -42,11 +42,10 @@ app.post("/register",async (req,res)=>{
                 res.status(410).send("Something went worng");
             }
             else{
-                const newUser = new User({
+                const newUser = await User.create({
                     email : username,
                     password:hash
                 });
-                await newUser.save();
             }
         });
 
@@ -59,7 +58,7 @@ app.post("/register",async (req,res)=>{
 app.post("/login", async (req,res)=>{
     const username = req.body.email;
     const password =req.body.password;
-    const user = await User.find({username:username});
+    const user = await User.find({email:username});
     if(!user.length){
         res.status(403).send("Invalid username or password");
     }
