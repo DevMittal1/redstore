@@ -29,7 +29,7 @@ app.get("/",(req,res)=>{
 //Register route handling
 
 app.post("/register",async (req,res)=>{
-    const username = req.body.username;
+    const username = req.body.email;
     const password = req.body.password;
     const user = await User.find({username:username});
     if(user.length){
@@ -57,7 +57,7 @@ app.post("/register",async (req,res)=>{
 // login route
 
 app.post("/login", async (req,res)=>{
-    const username = req.body.username;
+    const username = req.body.email;
     const password =req.body.password;
     const user = await User.find({username:username});
     if(!user.length){
