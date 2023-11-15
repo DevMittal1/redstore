@@ -15,16 +15,10 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: 'http://localhost:3000/', // Allow requests only from this origin (replace with your frontend's URL)
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-}))
-const mongoDBConnection = async()=>{
-try {
-    await mongoose.connect(process.env.MONGOURL+"retryWrites=true&w=majority");
-} catch (error) {
-    console.error('Error connecting to MongoDB:', error.message);
-}
-}
+}));
 
-mongoDBConnection();
+mongoose.connect(process.env.MONGOURL+"retryWrites=true&w=majority");
+
 
 
 // route that always return true value used for checking using ddeployment
